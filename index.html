@@ -111,7 +111,7 @@
     /* ── Hero ── */
     .hero {
       position: relative;
-      height: 100vh;
+      height: 100dvh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1100,6 +1100,8 @@
 
       section {
         padding: 40px 0;
+        height: 100dvh;
+        min-height: -webkit-fill-available;
       }
 
       .hero h1 {
@@ -1112,6 +1114,8 @@
 
       /* Fullbleed sections */
       .section-fullbleed {
+        height: 100dvh;
+        min-height: -webkit-fill-available;
       }
 
       .section-fullbleed .section-label {
@@ -1137,8 +1141,31 @@
 
       /* Grids */
       .episodes-grid {
-        grid-template-columns: 1fr;
-        gap: 24px;
+        display: contents;
+      }
+
+      .episode-card {
+        height: 100dvh;
+        min-height: -webkit-fill-available;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        scroll-snap-align: start;
+        padding: 0 20px;
+      }
+
+      .episode-card video,
+      .episode-card img {
+        aspect-ratio: 16/9 !important;
+        min-height: auto !important;
+      }
+
+      #format-steps {
+        display: contents;
+      }
+
+      #format-steps > .container {
+        display: contents;
       }
 
       .episodes-grid--three {
@@ -1173,6 +1200,8 @@
 
       /* Format */
       .format-hero {
+        height: 100dvh;
+        min-height: -webkit-fill-available;
       }
 
       .format-hero .format-hero-content {
@@ -1298,11 +1327,11 @@
         grid-template-columns: 1fr;
       }
 
-      /* Distribution section height */
+      /* Distribution section */
       #distribution {
-        height: auto !important;
-        min-height: 100vh;
-        scroll-snap-align: none !important;
+        height: 100dvh !important;
+        min-height: -webkit-fill-available;
+        scroll-snap-align: start !important;
       }
 
       /* Mobile carousel for grids with 3+ items */
