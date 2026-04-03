@@ -1098,9 +1098,14 @@
         padding: 0 20px;
       }
 
+      html {
+        scroll-snap-type: none;
+      }
+
       section {
         padding: 40px 0;
         height: var(--vh, 100vh);
+        scroll-snap-align: none;
       }
 
       .hero h1 {
@@ -1154,7 +1159,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        scroll-snap-align: start;
+        scroll-snap-align: none;
         box-sizing: border-box;
       }
 
@@ -1325,7 +1330,7 @@
       /* Distribution section */
       #distribution {
         height: var(--vh, 100vh) !important;
-        scroll-snap-align: start !important;
+        scroll-snap-align: none !important;
       }
 
       /* Mobile carousel for grids with 3+ items */
