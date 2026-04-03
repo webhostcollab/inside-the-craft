@@ -53,7 +53,7 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      opacity: 0;
+      opacity: 0.7;
       transition: opacity 0.4s;
       font-weight: 500;
     }
@@ -107,7 +107,8 @@
       scroll-snap-align: start;
     }
 
-    .hero video {
+    .hero video,
+    .hero > img {
       position: absolute;
       inset: 0;
       width: 100%;
@@ -805,19 +806,273 @@
       opacity: 0;
     }
 
+    /* ── Large displays ── */
+    @media (min-width: 1600px) {
+      .container {
+        max-width: 1600px;
+        padding: 0 80px;
+      }
+
+      .section-label {
+        font-size: clamp(2.2rem, 3.5vw, 3.2rem);
+      }
+
+      .section-body p {
+        font-size: clamp(0.9rem, 1vw, 1.15rem);
+        max-width: 600px;
+      }
+
+      .section-body .highlight {
+        font-size: clamp(1.2rem, 1.4vw, 1.6rem);
+        max-width: 900px;
+      }
+
+      .section-fullbleed .section-body p,
+      .section-fullbleed .section-body li {
+        max-width: 560px;
+      }
+
+      .section-fullbleed .section-body .pullquote {
+        font-size: clamp(1.4rem, 1.8vw, 2rem);
+        max-width: 540px;
+      }
+
+      .section-fullbleed .section-label {
+        font-size: clamp(4rem, 5.5vw, 5.5rem);
+      }
+
+      nav .nav-links a {
+        font-size: 0.75rem;
+      }
+
+      nav .nav-logo {
+        font-size: 0.9rem;
+      }
+
+      .episode-card h3 {
+        font-size: 1.05rem;
+      }
+
+      .episode-card p {
+        font-size: 0.85rem;
+      }
+
+      .step-text .step-label {
+        font-size: 1.15rem;
+      }
+
+      .step-text .step-desc {
+        font-size: 1rem;
+      }
+
+      .format-hero .subtitle-line {
+        font-size: 1.4rem;
+      }
+
+      .format-hero .format-detail {
+        font-size: 1rem;
+      }
+
+      .closing p {
+        font-size: 1.2rem;
+        max-width: 620px;
+      }
+
+      .bullet-list li {
+        font-size: 1.05rem;
+      }
+
+      .visual-approach-grid .inline-video video {
+        height: 500px;
+      }
+
+      .stills-row img {
+        height: 280px;
+      }
+
+      .step-video video {
+        height: 340px;
+      }
+
+      .about-media .inline-video video,
+      .about-media .inline-video img,
+      .about-media > img {
+        height: 32vh;
+      }
+
+      .player-sidebar .player-section-label {
+        font-size: 1rem;
+      }
+
+      .player-sidebar .player-title {
+        font-size: 1rem;
+      }
+
+      .player-sidebar .player-desc {
+        font-size: 0.9rem;
+      }
+
+      .episode-number {
+        font-size: 0.8rem;
+      }
+
+      nav {
+        padding: 14px 80px;
+      }
+
+      nav .nav-links {
+        gap: 32px;
+      }
+    }
+
+    @media (min-width: 2000px) {
+      .container {
+        max-width: 1900px;
+        padding: 0 120px;
+      }
+
+      .section-body p {
+        font-size: 1.25rem;
+        max-width: 700px;
+      }
+
+      .section-body .highlight {
+        font-size: 1.8rem;
+        max-width: 1000px;
+      }
+
+      .section-label {
+        font-size: 3.5rem;
+      }
+
+      .section-fullbleed .section-label {
+        font-size: 6rem;
+      }
+
+      .section-fullbleed .section-body p,
+      .section-fullbleed .section-body li {
+        max-width: 680px;
+        font-size: 1.25rem;
+      }
+
+      .section-fullbleed .section-body .pullquote {
+        font-size: 2.2rem;
+        max-width: 640px;
+      }
+
+      nav .nav-links a {
+        font-size: 0.85rem;
+      }
+
+      nav .nav-logo {
+        font-size: 1rem;
+      }
+
+      .episode-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .episode-card p {
+        font-size: 0.95rem;
+      }
+
+      .step-text .step-label {
+        font-size: 1.3rem;
+      }
+
+      .step-text .step-desc {
+        font-size: 1.15rem;
+      }
+
+      .format-hero .subtitle-line {
+        font-size: 1.7rem;
+      }
+
+      .format-hero .format-detail {
+        font-size: 1.15rem;
+      }
+
+      .closing p {
+        font-size: 1.4rem;
+        max-width: 740px;
+      }
+
+      .bullet-list li {
+        font-size: 1.2rem;
+      }
+
+      .visual-approach-grid .inline-video video {
+        height: 580px;
+      }
+
+      .stills-row img {
+        height: 340px;
+      }
+
+      .step-video video {
+        height: 400px;
+      }
+
+      .about-media .inline-video video,
+      .about-media .inline-video img,
+      .about-media > img {
+        height: 36vh;
+      }
+
+      .player-view {
+        grid-template-columns: 1fr 420px;
+      }
+
+      .player-sidebar .player-section-label {
+        font-size: 1.1rem;
+      }
+
+      .player-sidebar .player-title {
+        font-size: 1.1rem;
+      }
+
+      .player-sidebar .player-desc {
+        font-size: 1rem;
+      }
+
+      .episode-number {
+        font-size: 0.9rem;
+      }
+
+      nav {
+        padding: 18px 120px;
+      }
+
+      nav .nav-links {
+        gap: 40px;
+      }
+
+      .format-hero .format-hero-content {
+        padding: 0 120px;
+      }
+
+      .closing {
+        padding: 160px 60px;
+      }
+    }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .nav-toggle {
         display: block;
       }
 
+      nav {
+        padding: 10px 20px;
+      }
+
       nav .nav-links {
         display: none;
         position: absolute;
         top: 100%;
-        right: 50px;
+        right: 20px;
         flex-direction: column;
-        background: rgba(0,0,0,0.9);
+        background: rgba(0,0,0,0.95);
         padding: 16px 24px;
         gap: 16px;
         border-radius: 4px;
@@ -827,12 +1082,114 @@
         display: flex;
       }
 
+      .container {
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 40px 0;
+        height: auto;
+        min-height: 100vh;
+        scroll-snap-align: none;
+      }
+
+      html {
+        scroll-snap-type: none;
+      }
+
+      .hero h1 {
+        font-size: clamp(2rem, 10vw, 3.5rem);
+      }
+
+      .hero .subtitle {
+        font-size: clamp(0.7rem, 2.5vw, 0.9rem);
+      }
+
+      /* Fullbleed sections */
+      .section-fullbleed {
+        height: auto;
+        min-height: 100vh;
+        scroll-snap-align: none;
+      }
+
+      .section-fullbleed .section-label {
+        font-size: clamp(1.6rem, 6vw, 2.5rem);
+      }
+
+      .section-fullbleed .section-body p,
+      .section-fullbleed .section-body li {
+        max-width: 100%;
+      }
+
+      .section-fullbleed .section-body .pullquote {
+        font-size: 1.1rem;
+        max-width: 100%;
+      }
+
+      .section-fullbleed > video,
+      .section-fullbleed > img {
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      /* Grids */
+      .episodes-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
       .episodes-grid--three {
         grid-template-columns: 1fr;
       }
 
-      .about-grid {
+      .episodes-grid--three .episode-card video,
+      .episodes-grid--three .episode-card img {
+        min-height: 200px;
+      }
+
+      .about-grid,
+      .about-grid--reversed {
         grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .about-media .inline-video video,
+      .about-media .inline-video img,
+      .about-media > img {
+        height: 200px;
+      }
+
+      .visual-approach-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .visual-approach-grid .inline-video video {
+        height: 220px;
+      }
+
+      /* Format */
+      .format-hero {
+        height: auto;
+        min-height: 100vh;
+        scroll-snap-align: none;
+      }
+
+      .format-hero .format-hero-content {
+        padding: 0 20px;
+      }
+
+      .format-hero .section-label {
+        font-size: clamp(2rem, 10vw, 3.5rem);
+      }
+
+      .format-hero .subtitle-line {
+        font-size: 1rem;
+      }
+
+      .format-hero .format-detail {
+        font-size: 0.8rem;
       }
 
       .format-step {
@@ -840,16 +1197,154 @@
         gap: 16px;
       }
 
-      .format-hero .format-hero-content {
-        padding: 0 40px;
+      .step-video video {
+        height: 200px;
       }
 
+      /* Stills */
       .stills-row img {
-        height: 160px;
+        height: 140px;
       }
 
-      section {
-        padding: 40px 0;
+      /* Player */
+      .player-view {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+      }
+
+      .player-sidebar {
+        padding: 20px;
+        max-height: 40vh;
+      }
+
+      .player-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+      }
+
+      /* Episode cards on fullbleed - stack text below */
+      .section-fullbleed .container[style*="flex-end"] {
+        justify-content: flex-start !important;
+      }
+
+      /* Section labels and body */
+      .section-label {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+      }
+
+      .section-body p {
+        font-size: 0.85rem;
+        max-width: 100%;
+      }
+
+      .section-body .highlight {
+        font-size: 1rem;
+      }
+
+      /* Closing */
+      .closing {
+        padding: 60px 20px;
+      }
+
+      .closing p {
+        font-size: 0.9rem;
+      }
+
+      /* Distribution section */
+      #distribution .container {
+        flex-direction: column !important;
+        gap: 24px !important;
+      }
+
+      #distribution .container > div:first-child,
+      #distribution .container > div:last-child {
+        flex: none !important;
+        width: 100%;
+      }
+
+      #distribution .container > div:last-child > div {
+        height: 30vh !important;
+        width: 100% !important;
+        aspect-ratio: 16/9 !important;
+      }
+
+      /* Page number */
+      .page-number {
+        font-size: 0.5rem;
+        bottom: 16px;
+      }
+
+      /* Episode number */
+      .episode-number {
+        font-size: 0.6rem;
+      }
+
+      /* Bullet list */
+      .bullet-list li {
+        font-size: 0.85rem;
+      }
+
+      /* Why It Works - don't push to flex-end on mobile */
+      .section-fullbleed .container[style*="flex-end"] {
+        align-items: flex-start !important;
+      }
+
+      /* What Defines the Format - remove left padding on mobile */
+      .about-grid--reversed .about-text {
+        padding-left: 0 !important;
+      }
+
+      .about-grid--reversed {
+        grid-template-columns: 1fr;
+      }
+
+      /* Distribution section height */
+      #distribution {
+        height: auto !important;
+        min-height: 100vh;
+        scroll-snap-align: none !important;
+      }
+
+      /* Mobile carousel for grids with 3+ items */
+      .mobile-carousel {
+        position: relative;
+      }
+
+      .mobile-carousel > * {
+        display: none;
+      }
+
+      .mobile-carousel > .carousel-active {
+        display: block;
+      }
+
+      .mobile-carousel {
+        display: block;
+        position: relative;
+      }
+
+      .mobile-carousel .carousel-arrows {
+        display: none;
+      }
+
+      .mobile-carousel .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .mobile-carousel .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.3);
+        cursor: pointer !important;
+      }
+
+      .mobile-carousel .carousel-dot.active {
+        background: rgba(255,255,255,0.8);
       }
     }
   </style>
@@ -857,9 +1352,10 @@
 <body>
 
   <nav id="nav">
-    <a href="#" class="nav-logo" style="text-decoration: none; color: inherit;">Inside the Craft</a>
+    <a href="#" class="nav-logo" style="text-decoration: none; color: inherit;"><img src="Assets/Stills/icon_white.png" alt="Inside the Craft" style="height: 28px; vertical-align: middle;"></a>
     <button class="nav-toggle" id="navToggle">=</button>
     <ul class="nav-links" id="navLinks">
+      <li><a href="#">Inside the Craft</a></li>
       <li><a href="#about">Concept</a></li>
       <li><a href="#format">Format</a></li>
       <li><a href="#episodes">Episodes</a></li>
@@ -871,9 +1367,7 @@
 
   <!-- ════ HERO ════ -->
   <section class="hero">
-    <video autoplay muted loop playsinline>
-      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/hero-clip.mp4" type="video/mp4">
-    </video>
+    <img src="Assets/Stills/THE-KILLER-V-RPATOR-X.jpeg" alt="Inside the Craft">
     <div class="hero-content">
       <h1>Inside the Craft</h1>
       <p class="subtitle">The moments behind how it's made</p>
@@ -882,9 +1376,7 @@
 
   <!-- ════ WHAT IT IS ════ -->
   <section class="section-fullbleed" id="about">
-    <video autoplay muted loop playsinline style="transform: scaleX(-1);">
-      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/what-it-is.mp4" type="video/mp4">
-    </video>
+    <img src="Assets/Stills/5ac3c-mank_locationhorses.jpg" alt="What It Is">
     <div class="container">
       <div class="section-label">What It Is</div>
       <div class="section-body">
@@ -899,7 +1391,7 @@
   <!-- ════ WHY IT WORKS ════ -->
   <section class="section-fullbleed">
     <video autoplay muted loop playsinline style="object-position: center center;">
-      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/why-it-works.mp4" type="video/mp4">
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/videowhyitworks.mov" type="video/mp4">
     </video>
     <div class="container" style="display: flex; flex-direction: column; align-items: flex-end;">
       <div style="text-align: left;">
@@ -919,9 +1411,7 @@
 
   <!-- ════ FORMAT HERO ════ -->
   <div class="format-hero" id="format">
-    <video autoplay muted loop playsinline>
-      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/format-hero.mp4" type="video/mp4">
-    </video>
+    <img src="Assets/Stills/5ac3c-mank_locationhorses.jpg" alt="Format" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
     <div class="format-hero-content">
       <div class="section-label">Format</div>
       <div class="subtitle-line">One moment. One team. One breakdown.</div>
@@ -1028,7 +1518,7 @@
   <!-- ════ EPISODE 2 ════ -->
   <section class="section-fullbleed">
     <video autoplay muted loop playsinline>
-      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/camera-warehouse.mp4" type="video/mp4">
+      <source src="../Assets/Trimmed Video/How Christopher Nolan Made Oppenheimer — Oppenheimer Behind the Scenes00007101.mov" type="video/mp4">
     </video>
     <div class="container" style="display: flex; justify-content: flex-end;">
       <div style="text-align: left;">
@@ -1128,20 +1618,30 @@
 
 
   <!-- ════ DISTRIBUTION ════ -->
-  <section class="section-fullbleed" id="distribution">
-    <video autoplay muted loop playsinline>
-      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/social-network-fincher.mp4" type="video/mp4">
-    </video>
-    <div class="container">
-      <div class="section-label">Distribution</div>
-      <div class="section-body">
-        <ul class="bullet-list">
-          <li>Instagram / TikTok — cutdowns</li>
-          <li>YouTube — full episodes</li>
-          <li>Opportunity: LinkedIn</li>
-        </ul>
-        <p style="margin-top: 20px;">A professional audience already invested in how things are made.</p>
-        <p>Built as a complete experience, designed to break into moments.</p>
+  <section id="distribution" style="position: relative; height: 100vh; display: flex; align-items: center; scroll-snap-align: start; overflow: hidden; background: #000;">
+    <div class="container" style="display: flex; align-items: center; gap: 60px;">
+      <div style="flex: 1;">
+        <div class="section-label">Distribution</div>
+        <div class="section-body">
+          <ul class="bullet-list">
+            <li>Instagram / TikTok — cutdowns</li>
+            <li>YouTube — full episodes</li>
+            <li>Opportunity: LinkedIn</li>
+          </ul>
+          <p style="margin-top: 20px;">Linkedin provides a professional audience that's already invested in how things are made.</p>
+          <p>Built as a complete experience, designed to break into moments.</p>
+        </div>
+      </div>
+      <div style="flex: 1; display: flex; justify-content: center;">
+        <div style="position: relative; display: inline-block; aspect-ratio: 16/9; height: 60vh; overflow: hidden; border-radius: 6px;">
+          <img src="Assets/Stills/Miley Cyrus - Easy Lover.png" alt="Distribution format" style="width: 100%; height: 100%; object-fit: cover;">
+          <!-- 9:16 center outline -->
+          <div style="position: absolute; top: 2%; left: 50%; transform: translateX(-50%); height: 96%; aspect-ratio: 9/16; border: 2px solid rgba(255,255,255,0.8); border-radius: 4px; pointer-events: none;">
+            <p style="position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 0.6rem; opacity: 0.6; letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;">9:16</p>
+          </div>
+          <!-- 16:9 label -->
+          <p style="position: absolute; bottom: 8px; right: 12px; font-size: 0.6rem; opacity: 0.6; letter-spacing: 0.1em; text-transform: uppercase;">16:9</p>
+        </div>
       </div>
     </div>
   </section>
@@ -1149,7 +1649,7 @@
 
   <!-- ════ WHY RDM ════ -->
   <section id="rdm" style="position: relative; justify-content: center;">
-    <img src="Assets/Stills/small_GC3UDXLT.jpg" alt="Why RDM" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3;">
+    <img src="Assets/Stills/Babylon - 2022.png" alt="Why RDM" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.6;">
     <div class="container" style="text-align: center; position: relative; z-index: 2;">
       <div class="section-label" style="font-size: clamp(3rem, 8vw, 7rem);">Why RDM</div>
       <div class="section-body" style="max-width: 500px; margin: 0 auto;">
@@ -1280,6 +1780,46 @@
         allPages[next].scrollIntoView({ behavior: 'smooth' });
       }
     });
+    // Mobile carousel for grids with 3+ items
+    function initMobileCarousels() {
+      if (window.innerWidth > 768) return;
+
+      const grids = document.querySelectorAll('.about-media');
+      grids.forEach(grid => {
+        if (grid.classList.contains('mobile-carousel')) return;
+        const items = Array.from(grid.children);
+        if (items.length < 3) return;
+
+        grid.classList.add('mobile-carousel');
+        items[0].classList.add('carousel-active');
+
+        // Dots
+        const dots = document.createElement('div');
+        dots.className = 'carousel-dots';
+        items.forEach((_, i) => {
+          const dot = document.createElement('div');
+          dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+          dots.appendChild(dot);
+        });
+        grid.appendChild(dots);
+
+        let current = 0;
+        dots.addEventListener('click', (e) => {
+          const dot = e.target.closest('.carousel-dot');
+          if (!dot) return;
+          const idx = Array.from(dots.children).indexOf(dot);
+          items[current].classList.remove('carousel-active');
+          current = idx;
+          items[current].classList.add('carousel-active');
+          dots.querySelectorAll('.carousel-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+          });
+        });
+      });
+    }
+
+    initMobileCarousels();
+    window.addEventListener('resize', initMobileCarousels);
   </script>
 
 </body>
