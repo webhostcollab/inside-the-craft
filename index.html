@@ -1140,8 +1140,15 @@
       }
 
       /* Grids */
+      #format-steps {
+        height: auto;
+        padding: 0;
+        scroll-snap-align: none;
+      }
+
       .episodes-grid {
-        display: contents;
+        grid-template-columns: 1fr;
+        gap: 0;
       }
 
       .episode-card {
@@ -1151,21 +1158,13 @@
         flex-direction: column;
         justify-content: center;
         scroll-snap-align: start;
-        padding: 0 20px;
+        box-sizing: border-box;
       }
 
       .episode-card video,
       .episode-card img {
         aspect-ratio: 16/9 !important;
         min-height: auto !important;
-      }
-
-      #format-steps {
-        display: contents;
-      }
-
-      #format-steps > .container {
-        display: contents;
       }
 
       .episodes-grid--three {
