@@ -1100,8 +1100,7 @@
 
       section {
         padding: 40px 0;
-        height: 100dvh;
-        min-height: -webkit-fill-available;
+        height: var(--vh, 100vh);
       }
 
       .hero h1 {
@@ -1114,8 +1113,7 @@
 
       /* Fullbleed sections */
       .section-fullbleed {
-        height: 100dvh;
-        min-height: -webkit-fill-available;
+        height: var(--vh, 100vh);
       }
 
       .section-fullbleed .section-label {
@@ -1152,8 +1150,7 @@
       }
 
       .episode-card {
-        height: 100dvh;
-        min-height: -webkit-fill-available;
+        height: var(--vh, 100vh);
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -1199,8 +1196,7 @@
 
       /* Format */
       .format-hero {
-        height: 100dvh;
-        min-height: -webkit-fill-available;
+        height: var(--vh, 100vh);
       }
 
       .format-hero .format-hero-content {
@@ -1328,8 +1324,7 @@
 
       /* Distribution section */
       #distribution {
-        height: 100dvh !important;
-        min-height: -webkit-fill-available;
+        height: var(--vh, 100vh) !important;
         scroll-snap-align: start !important;
       }
 
@@ -1415,6 +1410,14 @@
   </style>
 </head>
 <body>
+  <script>
+    // Fix iOS viewport height
+    function setVH() {
+      document.documentElement.style.setProperty('--vh', window.innerHeight + 'px');
+    }
+    setVH();
+    window.addEventListener('resize', setVH);
+  </script>
 
   <div class="progress-bar" id="progressBar"></div>
 
