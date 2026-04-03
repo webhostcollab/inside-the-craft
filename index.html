@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inside the Craft</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23FFD700'/></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    @font-face {
+      font-family: 'HollywoodHills';
+      src: url('Assets/HollywoodHills.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 50px;
+      background: transparent;
+    }
+
+    nav .nav-logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transition: opacity 0.4s;
+      font-weight: 500;
+    }
+
+    nav.scrolled .nav-logo {
+      opacity: 0.7;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      font-weight: 400;
+    }
+
+    nav .nav-links a:hover,
+    nav .nav-links a.active {
+      opacity: 1;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      opacity: 0.6;
+      cursor: pointer !important;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      scroll-snap-align: start;
+    }
+
+    .hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: -0.05em;
+      font-weight: 600;
+    }
+
+    .hero .subtitle {
+      font-size: clamp(0.9rem, 2vw, 1.3rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.5;
+      font-weight: 300;
+    }
+
+    .hero::after {
+      display: none;
+    }
+
+    /* ── Clickable video ── */
+    .clickable-video {
+      cursor: pointer;
+      position: relative;
+    }
+
+    .video-wrapper {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .video-wrapper .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .video-wrapper:hover .play-overlay {
+      opacity: 1;
+    }
+
+    .video-wrapper .play-overlay svg {
+      width: 48px;
+      height: 48px;
+      fill: #fff;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+
+    .video-wrapper.playing .play-overlay svg .play-icon { display: none; }
+    .video-wrapper.playing .play-overlay svg .pause-icon { display: block; }
+    .video-wrapper:not(.playing) .play-overlay svg .pause-icon { display: none; }
+
+    /* ── About grid ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .about-grid--reversed {
+      grid-template-columns: 3fr 2fr;
+    }
+
+    .about-media {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-media .inline-video {
+      margin: 0;
+    }
+
+    .about-media .inline-video video,
+    .about-media .inline-video img,
+    .about-media > img {
+      width: 100%;
+      height: 27vh;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+
+    /* ── Sections ── */
+    section {
+      position: relative;
+      padding: 60px 0;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      scroll-snap-align: start;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 50px;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+
+    .section-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      font-weight: 600;
+      line-height: 1.05;
+    }
+
+    .section-body p, .section-body li {
+      orphans: 2;
+      widows: 2;
+      text-wrap: pretty;
+    }
+
+    .section-body p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      opacity: 0.85;
+      max-width: 480px;
+      margin-bottom: 0.7em;
+    }
+
+    .section-body .highlight {
+      font-size: 1.2rem;
+      line-height: 1.4;
+      opacity: 1;
+      max-width: 800px;
+      margin-bottom: 1.2em;
+    }
+
+    .section-body .italic {
+      font-style: italic;
+      opacity: 0.6;
+    }
+
+    /* ── Video backgrounds for sections ── */
+    .section-video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .section-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+    }
+
+    .section-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 100%);
+    }
+
+    /* ── Inline video player ── */
+    .inline-video {
+      margin: 40px 0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .inline-video video {
+      width: 100%;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .inline-video:hover video {
+      transform: scale(1.04);
+    }
+
+    /* ── Episode cards ── */
+    .episodes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 0;
+    }
+
+    .episodes-grid--three {
+      grid-template-columns: 1fr;
+    }
+
+    .episode-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .episode-card video,
+    .episode-card img {
+      width: 100%;
+      aspect-ratio: 16 / 6;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .episodes-grid--three .episode-card video,
+    .episodes-grid--three .episode-card img {
+      aspect-ratio: 21 / 9;
+      min-height: 360px;
+    }
+
+    .episode-card:hover video,
+    .episode-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .episode-card .card-text {
+      padding: 16px 0;
+    }
+
+    .episode-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .episode-card p {
+      font-size: 0.75rem;
+      opacity: 0.6;
+    }
+
+    /* ── Format hero ── */
+    .format-hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      scroll-snap-align: start;
+    }
+
+    .format-hero video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+    }
+
+    .format-hero::after {
+      display: none;
+    }
+
+    .format-hero .format-hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 50px;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .format-hero .section-label {
+      font-size: clamp(3rem, 8vw, 7rem);
+      margin-bottom: 0.1em;
+      text-align: center;
+      letter-spacing: -0.03em;
+    }
+
+    .format-hero .subtitle-line {
+      font-size: 1.2rem;
+      font-style: normal;
+      font-weight: 300;
+      opacity: 0.9;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .format-hero .format-detail {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .format-hero .format-hero-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ── Format structure ── */
+    .format-steps {
+      margin-top: 0;
+    }
+
+    .format-step {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .step-text .step-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .step-text .step-desc {
+      font-size: 0.85rem;
+      opacity: 0.75;
+      line-height: 1.7;
+    }
+
+    .step-video {
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .step-video video {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+      cursor: pointer;
+    }
+
+    .step-video:hover video {
+      transform: scale(1.04);
+    }
+
+    /* ── Still images row ── */
+    .stills-row {
+      display: flex;
+      gap: 10px;
+      margin: 50px 0;
+      overflow-x: auto;
+    }
+
+    .stills-row img {
+      height: 220px;
+      object-fit: cover;
+      border-radius: 3px;
+      flex-shrink: 0;
+      opacity: 0.8;
+    }
+
+    /* ── Bullet list ── */
+    .bullet-list {
+      list-style: disc;
+      margin-top: 10px;
+      padding-left: 1.2em;
+    }
+
+    .bullet-list li {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      line-height: 1.6;
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: rgba(255,255,255,0.2);
+      margin: 40px auto;
+    }
+
+    /* ── Custom inverted circle cursor ── */
+    * {
+      cursor: none !important;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #fff;
+      mix-blend-mode: difference;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      transition: width 0.35s ease, height 0.35s ease;
+    }
+
+    .custom-cursor.expanded {
+      width: 80px;
+      height: 80px;
+    }
+
+    /* ── Player view ── */
+    .player-view {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: #000;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+      cursor: default !important;
+    }
+
+    .player-view * {
+      cursor: default !important;
+    }
+
+    .player-view.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .player-view.open ~ .custom-cursor {
+      display: none;
+    }
+
+    .player-video-area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #000;
+    }
+
+    .player-video-area video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .player-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.4rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer !important;
+      opacity: 0.5;
+      transition: opacity 0.3s;
+      z-index: 2;
+    }
+
+    .player-nav:hover {
+      opacity: 1;
+    }
+
+    .player-prev { left: 20px; }
+    .player-next { right: 20px; }
+
+    .player-sidebar {
+      background: rgba(255,255,255,0.03);
+      border-left: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+
+    .player-sidebar .player-section-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 1;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .player-sidebar .player-title {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .player-sidebar .player-desc {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      opacity: 0.6;
+    }
+
+    .player-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: auto;
+      padding-top: 30px;
+    }
+
+    .player-btn {
+      background: none;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 2px;
+      cursor: pointer !important;
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .player-btn:hover {
+      opacity: 1;
+    }
+
+    .player-btn.active {
+      opacity: 1;
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ── Visual approach grid ── */
+    .visual-approach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .visual-approach-grid .inline-video {
+      margin: 0;
+    }
+
+    .visual-approach-grid .inline-video video {
+      height: 420px;
+      object-fit: cover;
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Closing section ── */
+    .closing {
+      text-align: center;
+      padding: 120px 40px;
+    }
+
+    .closing .section-label {
+      margin-bottom: 20px;
+    }
+
+    .closing p {
+      max-width: 500px;
+      margin: 0 auto;
+      opacity: 0.7;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    /* ── Full-bleed section (like format-hero but as a <section>) ── */
+    .section-fullbleed {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+
+    .section-fullbleed > video,
+    .section-fullbleed > img {
+      position: absolute;
+      inset: -15%;
+      width: 130%;
+      height: 130%;
+      object-fit: cover;
+      opacity: 0.9;
+    }
+
+    .section-fullbleed::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.05) 100%);
+      z-index: 1;
+    }
+
+    .section-fullbleed .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .section-fullbleed .section-label {
+      font-size: clamp(2rem, 5vw, 4rem);
+      margin-bottom: 10px;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-left: -0.03em;
+    }
+
+    .section-fullbleed .section-body p,
+    .section-fullbleed .section-body li {
+      max-width: 440px;
+    }
+
+    .section-fullbleed .section-body .pullquote {
+      font-size: 1.4rem;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+      opacity: 0.95;
+      max-width: 420px;
+      margin-bottom: 1em;
+    }
+
+    /* ── Episode number ── */
+    .episode-number {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.4;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+
+    /* ── Page number indicator ── */
+    .page-number {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 99;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      color: #fff;
+      opacity: 0.5;
+      font-weight: 400;
+      font-variant-numeric: tabular-nums;
+      transition: opacity 0.4s;
+    }
+
+    .player-view.open ~ .page-number {
+      opacity: 0;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-toggle {
+        display: block;
+      }
+
+      nav .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 50px;
+        flex-direction: column;
+        background: rgba(0,0,0,0.9);
+        padding: 16px 24px;
+        gap: 16px;
+        border-radius: 4px;
+      }
+
+      nav .nav-links.open {
+        display: flex;
+      }
+
+      .episodes-grid--three {
+        grid-template-columns: 1fr;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .format-step {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .format-hero .format-hero-content {
+        padding: 0 40px;
+      }
+
+      .stills-row img {
+        height: 160px;
+      }
+
+      section {
+        padding: 40px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <a href="#" class="nav-logo" style="text-decoration: none; color: inherit;">Inside the Craft</a>
+    <button class="nav-toggle" id="navToggle">=</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">Concept</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#episodes">Episodes</a></li>
+      <li><a href="#visuals">Visuals</a></li>
+      <li><a href="#distribution">Distribution</a></li>
+      <li><a href="#rdm">RDM</a></li>
+    </ul>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/hero-clip.mp4" type="video/mp4">
+    </video>
+    <div class="hero-content">
+      <h1>Inside the Craft</h1>
+      <p class="subtitle">The moments behind how it's made</p>
+    </div>
+  </section>
+
+  <!-- ════ WHAT IT IS ════ -->
+  <section class="section-fullbleed" id="about">
+    <video autoplay muted loop playsinline style="transform: scaleX(-1);">
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/what-it-is.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <div class="section-label">What It Is</div>
+      <div class="section-body">
+        <p class="pullquote">Not behind-the-scenes.<br>Not film school.</p>
+        <p>Each episode is led by the people behind the work,<br>breaking down how they pulled off one standout moment.</p>
+        <p>How the most memorable moments in film are actually made.</p>
+        <p>Filmmaking, without the filter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ WHY IT WORKS ════ -->
+  <section class="section-fullbleed">
+    <video autoplay muted loop playsinline style="object-position: center center;">
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/why-it-works.mp4" type="video/mp4">
+    </video>
+    <div class="container" style="display: flex; flex-direction: column; align-items: flex-end;">
+      <div style="text-align: left;">
+      <div class="section-label">Why It<br>Works</div>
+      <div class="section-body">
+        <ul class="bullet-list">
+          <li>Extends engagement beyond launch</li>
+          <li>Positions Netflix as a champion of filmmaking</li>
+          <li>Reveals the craft behind the work</li>
+          <li>Hooks instantly and holds attention</li>
+        </ul>
+      </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ FORMAT HERO ════ -->
+  <div class="format-hero" id="format">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/format-hero.mp4" type="video/mp4">
+    </video>
+    <div class="format-hero-content">
+      <div class="section-label">Format</div>
+      <div class="subtitle-line">One moment. One team. One breakdown.</div>
+      <div class="format-detail">Each episode (5 - 8 minutes)<br>Introduced by David Fincher.<br>Led by the people behind the work.</div>
+    </div>
+  </div>
+
+  <!-- ════ FORMAT STEPS ════ -->
+  <section id="format-steps">
+    <div class="container">
+      <div class="episodes-grid">
+        <div class="episode-card">
+          <img src="Assets/Stills/Once Upon a Time in Hollywood - 2019 (1).png" alt="Once Upon a Time in Hollywood">
+          <div class="card-text">
+            <h3>01. Opening</h3>
+            <p>The finished result — big, immediate, undeniable. A man is launched through a windshield. Glass explodes. Impact feels real.</p>
+          </div>
+        </div>
+        <div class="episode-card">
+          <video autoplay muted loop playsinline>
+            <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/talking.mp4" type="video/mp4">
+          </video>
+          <div class="card-text">
+            <h3>02. The Setup</h3>
+            <p>Fincher frames the moment and introduces the team</p>
+          </div>
+        </div>
+        <div class="episode-card">
+          <video autoplay muted loop playsinline>
+            <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/explosions-bts.mp4" type="video/mp4">
+          </video>
+          <div class="card-text">
+            <h3>03. The Walkthrough</h3>
+            <p>The department head walks us through how their team pulled it off</p>
+          </div>
+        </div>
+        <div class="episode-card">
+          <video autoplay muted loop playsinline>
+            <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/ouatih-reveal.mp4" type="video/mp4">
+          </video>
+          <div class="card-text">
+            <h3>04. The Reveal</h3>
+            <p>The moment, now understood</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ WHAT MAKES IT DIFFERENT ════ -->
+  <section>
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <div class="section-label">What Makes It<br>Different</div>
+          <div class="section-body">
+            <p>These are the moments people rewind. Now they understand how they were pulled off.</p>
+            <p>We're not explaining filmmaking. We're showing how it actually gets done.</p>
+            <p>Audiences are already leaning in. Sports documentaries have proven the appetite. Filmmaking is just as layered, but no one has approached it like this.</p>
+            <p>It puts the spotlight on the people behind the work — the ones who make these moments possible.</p>
+            <p>A format others will follow. Netflix defines it first.</p>
+          </div>
+        </div>
+        <div class="about-media">
+          <div class="inline-video">
+            <img src="Assets/Stills/small_U4H1PIVW.jpg" alt="Gone Girl">
+          </div>
+          <div class="inline-video">
+            <video autoplay muted loop playsinline style="object-position: center top;">
+              <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/studio-oner.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="inline-video">
+            <img src="Assets/Stills/small_I9CTP4YY.jpg" alt="Still">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ SAMPLE EPISODES HERO ════ -->
+  <div class="format-hero" id="episodes">
+    <img src="Assets/Stills/f8a1ecca120b6ccbb9c8582d5ca399dde4-22-mank-bts.rhorizontal.w1100.webp" alt="Mank BTS" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.75;">
+    <div class="format-hero-content">
+      <div class="section-label">Sample Episodes</div>
+    </div>
+  </div>
+
+  <!-- ════ EPISODE 1 ════ -->
+  <section class="section-fullbleed">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/stunts-falls.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <div class="episode-number">Episode 01</div>
+      <div class="section-label">Stunts</div>
+      <div class="section-body">
+        <p>Launching a Man Through Glass — How the stunt team sells impact without injury</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ EPISODE 2 ════ -->
+  <section class="section-fullbleed">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/camera-warehouse.mp4" type="video/mp4">
+    </video>
+    <div class="container" style="display: flex; justify-content: flex-end;">
+      <div style="text-align: left;">
+        <div class="episode-number">Episode 02</div>
+        <div class="section-label">Camera</div>
+        <div class="section-body">
+          <p>Flying a Camera Through a Warehouse — The rig that makes impossible movement feel effortless</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ EPISODE 3 ════ -->
+  <section class="section-fullbleed">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/oppenheimer-bts.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <div class="episode-number">Episode 03</div>
+      <div class="section-label">Special<br>Effects</div>
+      <div class="section-body">
+        <p>Blowing Up a Building (Safely) — How controlled chaos is engineered on set</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ EPISODE 4 ════ -->
+  <section class="section-fullbleed">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/ouatih-production.mp4" type="video/mp4">
+    </video>
+    <div class="container" style="display: flex; justify-content: flex-end;">
+      <div style="text-align: left;">
+        <div class="episode-number">Episode 04</div>
+        <div class="section-label">Production<br>Design</div>
+        <div class="section-body">
+          <p>Building a Set That Lies to the Camera — How environments are engineered to feel real</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ EPISODE 5 ════ -->
+  <section class="section-fullbleed">
+    <img src="Assets/Stills/Allemaal Familie - 2017 (2).png" alt="Sound">
+    <div class="container">
+      <div class="episode-number">Episode 05</div>
+      <div class="section-label">Sound</div>
+      <div class="section-body">
+        <p>Why Silence Feels Louder — How sound design creates scale and tension</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ VISUAL APPROACH ════ -->
+  <div class="format-hero" id="visuals">
+    <img src="Assets/Stills/Once Upon a Time in Hollywood - 2019 (2).png" alt="Once Upon a Time in Hollywood" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.75;">
+    <div class="format-hero-content">
+      <div class="section-label">Visual Approach</div>
+      <div class="subtitle-line">This is not BTS.</div>
+      <div class="format-detail">Shot like the work it's capturing.<br>Built with the same precision as the film itself.<br>Every frame intentional.</div>
+    </div>
+  </div>
+
+
+  <!-- ════ WHAT DEFINES THE FORMAT ════ -->
+  <section>
+    <div class="container">
+      <div class="about-grid about-grid--reversed">
+        <div class="about-media">
+          <div class="inline-video">
+            <img src="Assets/Stills/david-fincher.webp" alt="David Fincher">
+          </div>
+          <div class="inline-video">
+            <video autoplay muted loop playsinline>
+              <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/hail-mary-bts.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="inline-video">
+            <img src="Assets/Stills/Allemaal Familie - 2017 (3).png" alt="Allemaal Familie">
+          </div>
+        </div>
+        <div class="about-text" style="text-align: left; display: flex; flex-direction: column; align-items: flex-start; padding-left: 40px;">
+          <div style="text-align: left;">
+            <div class="section-label">What Defines<br>the Format</div>
+            <div class="section-body">
+              <p class="highlight">Specific. Physical. Unexpected.</p>
+              <p>A moment you can't ignore.<br>A problem that had to be solved.<br>Led by the person who pulled it off.</p>
+              <p>Introduced by David Fincher.<br>Built around one standout moment.<br>Delivered like content — not education.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ DISTRIBUTION ════ -->
+  <section class="section-fullbleed" id="distribution">
+    <video autoplay muted loop playsinline>
+      <source src="https://pub-8933205d6c9a4f0891b6f8d483f80ff3.r2.dev/compressed/social-network-fincher.mp4" type="video/mp4">
+    </video>
+    <div class="container">
+      <div class="section-label">Distribution</div>
+      <div class="section-body">
+        <ul class="bullet-list">
+          <li>Instagram / TikTok — cutdowns</li>
+          <li>YouTube — full episodes</li>
+          <li>Opportunity: LinkedIn</li>
+        </ul>
+        <p style="margin-top: 20px;">A professional audience already invested in how things are made.</p>
+        <p>Built as a complete experience, designed to break into moments.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ WHY RDM ════ -->
+  <section id="rdm" style="position: relative; justify-content: center;">
+    <img src="Assets/Stills/small_GC3UDXLT.jpg" alt="Why RDM" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.3;">
+    <div class="container" style="text-align: center; position: relative; z-index: 2;">
+      <div class="section-label" style="font-size: clamp(3rem, 8vw, 7rem);">Why RDM</div>
+      <div class="section-body" style="max-width: 500px; margin: 0 auto;">
+        <p>We translate complex production into clear, compelling storytelling.</p>
+        <p>Built for high-stakes creative where execution defines the outcome.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ CUSTOM CURSOR ════ -->
+  <div class="page-number" id="pageNumber">01 / 10</div>
+  <div class="custom-cursor" id="customCursor"></div>
+
+  <script>
+    // Mobile nav toggle
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // Nav background on scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('[id]:is(section, .format-hero)');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (window.scrollY >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+      });
+    });
+
+    // Scroll reveal
+    const revealElements = document.querySelectorAll('.inline-video, .step-video, .step-video img, .episode-card, .stills-row img, .section-body, .section-label, .format-steps .format-step');
+    revealElements.forEach(el => el.classList.add('reveal'));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // Pause videos when scrolled out of view
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const vid = entry.target;
+        if (entry.isIntersecting) {
+          vid.play();
+        } else {
+          vid.pause();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('video[autoplay]').forEach(v => videoObserver.observe(v));
+
+    // Global custom cursor
+    const cursor = document.getElementById('customCursor');
+
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Page number indicator
+    const pageNumberEl = document.getElementById('pageNumber');
+    const allPages = document.querySelectorAll('section, .format-hero');
+    const totalPages = allPages.length;
+
+    const pageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(allPages).indexOf(entry.target) + 1;
+          if (idx === 1 || idx === totalPages) {
+            pageNumberEl.style.opacity = '0';
+          } else {
+            pageNumberEl.style.opacity = '';
+            pageNumberEl.textContent = String(idx).padStart(2, '0') + ' / ' + String(totalPages).padStart(2, '0');
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+
+    allPages.forEach(p => pageObserver.observe(p));
+
+    // Keyboard navigation: left/right arrows scroll up/down between sections
+    let currentPage = 0;
+
+    const pageVisObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          currentPage = Array.from(allPages).indexOf(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    allPages.forEach(p => pageVisObserver.observe(p));
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = Math.max(0, currentPage - 1);
+        allPages[prev].scrollIntoView({ behavior: 'smooth' });
+      } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        const next = Math.min(allPages.length - 1, currentPage + 1);
+        allPages[next].scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
+
+</body>
+</html>
